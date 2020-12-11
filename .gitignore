@@ -1,0 +1,12 @@
+# Build system
+node_modules
+_built
+
+# Editors & IDEs
+.vscode
+/.project
+*.code-workspace
+.idea/*
+.idea/vcs.xml
+
+
