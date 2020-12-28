@@ -70,7 +70,22 @@ function build() {
         buildPath += 'global' + slash;
         buildFiles(findFiles(path, 'index.'), buildPath);
     }
+    
+    else if (argv['template-id']) {
+        buildPath += "templates" + slash;
+        buildPath += argv['template-id'] + slash;
+        let templatePath = path;
+        templatePath += fs.readdirSync(path).filter((file) => {
+            if (file.indexOf(argv['template-id'] + "-") != -1) {
 
+                return true;
+            }
+            return false;
+        })[0];
+        templatePath += slash;
+        buildFiles(findFiles(templatePath, "index."), buildPath);
+    }
+    
     return gulp.src('.', {allowEmpty: true});
 }
 
@@ -123,6 +138,9 @@ function findDeepDir() {
     }
     if (argv['global']) {
         path += findDir(path, 'global', 'Global');
+    }
+    if (argv['template-id']) {
+        path += findDir(path, 'templates', 'Templates');
     }
     return path;
 }
