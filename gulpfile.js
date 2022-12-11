@@ -1,6 +1,4 @@
-const gulp = require('gulp');
-const { build } = require('./gulp-tasks/build');
-const { deploy } = require('./gulp-tasks/deploy');
+const gulp = require('gulp')
+const { build } = require('./gulp-tasks/build')
 
-gulp.task(build);
-gulp.task('deploy', deploy);
+gulp.task(build)
