@@ -53,6 +53,8 @@ function getRelativeBuildPath(absolutePath) {
 }
 
 function compileTS(filePath, buildPath) {
+	const isMinify = 'true' == argv['minify-js']
+	
 	return gulp
 		.src(filePath)
 		.pipe(plumber({}))
@@ -75,7 +77,7 @@ function compileTS(filePath, buildPath) {
 				path.extname = '.js'
 			})
 		)
-		.pipe(terser())
+		.pipe(isMinify ? terser() : gulp.dest(getRelativeBuildPath(buildPath)))
 		.pipe(gulp.dest(getRelativeBuildPath(buildPath)))
 }
 
@@ -84,6 +86,7 @@ function compileJS(filePath, buildPath) {
 		format: filePath.match('global') ? 'iife' : 'cjs',
 		strict: false,
 	}
+	const isMinify = 'true' == argv['minify-js']
 
 	return gulp
 		.src(filePath)
@@ -95,7 +98,7 @@ function compileJS(filePath, buildPath) {
 			)
 		)
 		.pipe(plumber.stop())
-		.pipe(terser())
+		.pipe(isMinify ? terser() : gulp.dest(getRelativeBuildPath(buildPath)))
 		.pipe(gulp.dest(getRelativeBuildPath(buildPath)))
 }
 
